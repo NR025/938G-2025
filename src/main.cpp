@@ -3,9 +3,6 @@
 #include "auto.hpp"
 #include "utils.hpp"
 
-
-HAHAHAH
-
 // 1. Add this at the top with your other variables
 bool isUnjamming = false; 
 
