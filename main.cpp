@@ -53,10 +53,9 @@ void initialize() {
     pros::lcd::initialize();
     chassis.calibrate();
 
-    // Start the Anti-Jam Task
     pros::Task antiJam(antiJamTask);
 
-    // Position Logging Task
+    // Position Logging task
     pros::Task screenTask([&]() {
         while (true) {
             pros::lcd::print(0, "X: %f", chassis.getPose().x);
