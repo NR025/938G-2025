@@ -1,27 +1,7 @@
 #include "main.h"
 #include "lemlib/api.hpp" // IWYU pragma: keep
-
-// controller
-pros::Controller controller(pros::E_CONTROLLER_MASTER);
-
-// motor groups
-pros::MotorGroup leftMotors({-11, -12, -13}, pros::MotorGearset::blue);
-pros::MotorGroup rightMotors({18, 19, 20}, pros::MotorGearset::blue);
-
-pros::Motor intake(9, pros::MotorGearset::blue); 
-pros::Motor hood(-5, pros::MotorGearset::blue); 
-
-// Inertial Sensor on port 10
-pros::Imu imu(10);
-
-// Drivetrain and Controller Settings (Keeping your LemLib settings)
-lemlib::Drivetrain drivetrain(&leftMotors, &rightMotors, 10, lemlib::Omniwheel::NEW_325, 480, 8);
-lemlib::ControllerSettings linearController(10, 0, 3, 3, 1, 100, 3, 500, 20);
-lemlib::ControllerSettings angularController(2, 0, 10, 3, 1, 100, 3, 500, 0);
-lemlib::OdomSensors sensors(nullptr, nullptr, nullptr, nullptr, &imu);
-lemlib::ExpoDriveCurve throttleCurve(3, 10, 1.019);
-lemlib::ExpoDriveCurve steerCurve(3, 10, 1.019);
-lemlib::Chassis chassis(drivetrain, linearController, angularController, sensors, &throttleCurve, &steerCurve);
+#include "auto.hpp"
+#include "utils.hpp"
 
 // 1. Add this at the top with your other variables
 bool isUnjamming = false; 
@@ -51,6 +31,7 @@ void antiJamTask(void* param) {
 
 void initialize() {
     pros::lcd::initialize();
+    pros::delay(2000);
     chassis.calibrate();
 
     // Start the Anti-Jam Task
@@ -66,10 +47,6 @@ void initialize() {
         }
     });
 }
-
-void disabled() {}
-void competition_initialize() {}
-void autonomous() {}
 
 // --- MAIN OPCONTROL ---
 void opcontrol() {
@@ -124,4 +101,13 @@ void opcontrol() {
         // 10ms delay for standard PROS loop timing
         pros::delay(10);
     }
+}
+
+
+
+void disabled() {}
+void competition_initialize() {}
+int main() {
+    autonomous(); // Call the function
+    return 0;
 }
