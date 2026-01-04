@@ -1,7 +1,6 @@
 #pragma once
 #include "lemlib/api.hpp"
 
-
 // controller
 pros::Controller controller(pros::E_CONTROLLER_MASTER);
 
