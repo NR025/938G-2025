@@ -6,6 +6,13 @@
 // 1. Add this at the top with your other variables
 bool isUnjamming = false; 
 
+bool descoreMech = false;
+bool lastA = false;
+
+bool loaderMech = false;
+bool lastB = false;
+
+
 // 2. Update your Anti-Jam Task
 void antiJamTask(void* param) {
     while (true) {
@@ -47,6 +54,7 @@ void initialize() {
         }
     });
 }
+
 
 // --- MAIN OPCONTROL ---
 void opcontrol() {
@@ -98,16 +106,31 @@ void opcontrol() {
         // Apply drive to LemLib chassis
         chassis.arcade(leftY, rightX);
 
+
+
+        bool currentA = controller.get_digital(pros::E_CONTROLLER_DIGITAL_A);
+
+        if (currentA && !lastA) {
+            descoreMech = !descoreMech;     // toggle state
+            descore.set_value(descoreMech); // apply to piston
+        }
+        lastA = currentA;
+
+
+        bool currentB = controller.get_digital(pros::E_CONTROLLER_DIGITAL_B);
+        if (currentB && !lastB) {
+            loaderMech = !loaderMech;     // toggle state
+            matchLoad.set_value(loaderMech); // apply to piston
+        }
+        lastB = currentB;
+
+        
         // 10ms delay for standard PROS loop timing
         pros::delay(10);
     }
 }
 
 
-
-void disabled() {}
-void competition_initialize() {}
-int main() {
-    autonomous(); // Call the function
-    return 0;
-}
+int main() { 
+    autonomous(); // Call the function return 0; 
+    }

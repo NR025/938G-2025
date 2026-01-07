@@ -14,6 +14,10 @@ pros::Motor hood(-5, pros::MotorGearset::blue);
 // Inertial Sensor on port 10
 pros::Imu imu(10);
 
+// Match Loader and descore pneumatics
+pros::ADIDigitalOut descore('B');
+pros::ADIDigitalOut matchLoad('D');
+
 // Drivetrain and Controller Settings (Keeping your LemLib settings)
 lemlib::Drivetrain drivetrain(&leftMotors, &rightMotors, 10.5, lemlib::Omniwheel::NEW_325, 480, 2);
 lemlib::ControllerSettings linearController(10, 0, 3, 3, 1, 100, 3, 500, 20);
